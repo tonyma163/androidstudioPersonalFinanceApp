@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Frag1"
+        android:id="@+id/frag1"
+        android:icon="@drawable/ic_android_black_24dp" />
+
+    <item
+        android:title="Frag2"
+        android:id="@+id/frag2"
+        android:icon="@drawable/ic_android_black_24dp" />
+
+    <item
+        android:title="Frag3"
+        android:id="@+id/frag3"
+        android:icon="@drawable/ic_android_black_24dp" />
+
+    <item
+        android:title="Frag4"
+        android:id="@+id/frag4"
+        android:icon="@drawable/ic_android_black_24dp" />
+
+    <item
+        android:title="Frag5"
+        android:id="@+id/frag5"
+        android:icon="@drawable/ic_android_black_24dp" />
+
+</menu>

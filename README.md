@@ -1,4 +1,4 @@
-# androidstudioPersonalFinanceApp
+# Android Studio Personal Finance App
 
 my personal finance application
 

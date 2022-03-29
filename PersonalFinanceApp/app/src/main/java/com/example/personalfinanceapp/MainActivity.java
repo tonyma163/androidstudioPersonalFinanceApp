@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         //initialize the welcome fragment
         changeFragment(new FragmentA());
 
+        //initialize all the things
         nav_view = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         //when user pressed the bottom navigation bar buttons

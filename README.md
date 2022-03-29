@@ -1,7 +1,7 @@
 # androidstudioPersonalFinanceApp
 my personal finance application
 school project (The Hang Seng University of Hong Kong)
-Team member:
+\n Team member:
 Ma Man To Tony(Me), Tam Wai Yin, Wong Ho Lam
 
 

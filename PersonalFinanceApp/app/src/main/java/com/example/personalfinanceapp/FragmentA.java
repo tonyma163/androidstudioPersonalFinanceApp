@@ -1,10 +1,13 @@
 package com.example.personalfinanceapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,13 +21,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentA#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class FragmentA extends Fragment {
-
+    DBOpenHelper myDb;
+    static String selectedCategory;
+    static int enteredAmount;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,16 +138,22 @@ public class FragmentA extends Fragment {
                 //Check the category
                 if (!spinner.getSelectedItem().toString().equals("Choose your category")) {
                     //Get selected category
-                    String selectedCategory = spinner.getSelectedItem().toString();
+                    selectedCategory = spinner.getSelectedItem().toString();
 
                     //Check the amount
                     if (et_transactionAmount.getText().toString().length()>0) {
 
                         //Get entered amount
-                        int enteredAmount = Integer.parseInt(et_transactionAmount.getText().toString());
+                        enteredAmount = Integer.parseInt(et_transactionAmount.getText().toString());
                         Log.e("Transaction", "Category: " + selectedCategory + ", Amounts: " + enteredAmount);
 
                         //need to save the category and amount later
+                        //Using the ExternalStorage
+                        //externalStorage();
+                        //External Storage not that useful
+
+                        //using MySQLite
+                        writeToDatabase();
 
                         //after added the transaction
                         Toast.makeText(getActivity(), "Added!", Toast.LENGTH_SHORT).show();
@@ -161,4 +181,72 @@ public class FragmentA extends Fragment {
 
         dialog.show();
     }
+
+    private void externalStorage() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            savePrivateExternalFile();
+        }
+    }
+
+    private void savePrivateExternalFile() {
+        File folder = getActivity().getExternalFilesDir("Transactions");
+        File myFile = new File (folder, "transactions.txt");
+        FileOutputStream fos = null;
+
+        try {
+            if(myFile.createNewFile()) {
+                Toast.makeText(getActivity(), "file created!", Toast.LENGTH_SHORT).show();
+                fos = new FileOutputStream(myFile);
+
+                //get current date
+                Date c = Calendar.getInstance().getTime();
+                System.out.println("Current time => " + c);
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                String formattedDate = df.format(c);
+
+                String content=formattedDate+","+selectedCategory+","+enteredAmount;
+
+                fos.write(content.getBytes());
+            } else {
+                Toast.makeText(getActivity(), "file exists!", Toast.LENGTH_SHORT).show();
+                //fos = new FileOutputStream(myFile);
+
+                //get current date
+                Date c = Calendar.getInstance().getTime();
+                System.out.println("Current time => " + c);
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                String formattedDate = df.format(c);
+
+                String content=formattedDate+","+selectedCategory+","+enteredAmount;
+                fos.write(content.getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void writeToDatabase() {
+        myDb = new DBOpenHelper(getActivity());
+
+        //get current date
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+
+        //use the DBOpenHelper insertData method
+        boolean result = myDb.insertData(formattedDate, selectedCategory, enteredAmount);
+
+        //check
+        //Toast.makeText(getActivity(), "data inserted = "+result, Toast.LENGTH_LONG).show();
+    }
+
 }

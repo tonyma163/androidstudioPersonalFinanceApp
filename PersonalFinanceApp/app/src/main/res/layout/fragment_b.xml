@@ -6,9 +6,30 @@
     tools:context=".FragmentB">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="FragmentB" />
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transactions"
+            android:textSize="35dp"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/transactionListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:dividerHeight="3dp"
+            android:divider="@color/black" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -12,4 +12,4 @@ Ma Man To Tony(Me), Tam Wai Yin, Wong Ho Lam
 
 3-26-2022 Posted on the Github
 
-Current: Developing
+Current: Developed
